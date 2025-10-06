@@ -7,6 +7,11 @@ public class PlayerMovement : MonoBehaviour
     public float acceleration = 25f;
     public float deceleration = 30f;
 
+    [Header("Dash Settings")]
+    public float dashForce = 20f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 0.5f;
+    
     [Header("Physics Settings")]
     public float gravityScale = 3f;
     public float jumpForce = 15f;
@@ -18,6 +23,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private float horizontalInput;
     private Vector2 targetVelocity;
+    
+    // Dash variables
+    private bool isDashing = false;
+    private float dashTimeLeft = 0f;
+    private float dashCooldownLeft = 0f;
+    private Vector2 dashDirection;
 
     void Start()
     {
@@ -39,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
         GetInput();
         HandleSpriteFlip();
         HandleJump();
+        HandleDash();
+        UpdateDashTimers();
     }
 
     void GetInput()
@@ -64,6 +77,62 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void HandleDash()
+    {
+        // Check if dash is available and player presses Shift
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownLeft <= 0f && !isDashing)
+        {
+            StartDash();
+        }
+    }
+
+    void StartDash()
+    {
+        isDashing = true;
+        dashTimeLeft = dashDuration;
+        dashCooldownLeft = dashCooldown;
+        
+        // Determine dash direction based on input or facing direction
+        if (Mathf.Abs(horizontalInput) > 0.1f)
+        {
+            dashDirection = new Vector2(horizontalInput, 0f).normalized;
+        }
+        else
+        {
+            // Dash in facing direction if no horizontal input
+            dashDirection = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        }
+        
+        // Apply dash force
+        rb.velocity = dashDirection * dashForce;
+        
+        // Optional: Disable gravity during dash for better control
+        rb.gravityScale = 0f;
+    }
+
+    void EndDash()
+    {
+        isDashing = false;
+        rb.gravityScale = gravityScale; // Restore gravity
+    }
+
+    void UpdateDashTimers()
+    {
+        if (isDashing)
+        {
+            dashTimeLeft -= Time.deltaTime;
+            if (dashTimeLeft <= 0f)
+            {
+                EndDash();
+            }
+        }
+        
+        if (dashCooldownLeft > 0f)
+        {
+            dashCooldownLeft -= Time.deltaTime;
+        }
+    }
+
     bool CheckGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down,
@@ -73,7 +142,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        HandleMovement();
+        // Only handle normal movement if not dashing
+        if (!isDashing)
+        {
+            HandleMovement();
+        }
         LimitVerticalVelocity();
     }
 
@@ -109,5 +182,16 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundCheckDistance);
+    }
+    
+    // Public methods to check dash state (useful for other scripts)
+    public bool IsDashing()
+    {
+        return isDashing;
+    }
+    
+    public float GetDashCooldownPercent()
+    {
+        return Mathf.Clamp01(1f - (dashCooldownLeft / dashCooldown));
     }
 }
