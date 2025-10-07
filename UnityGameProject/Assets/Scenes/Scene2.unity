@@ -2641,9 +2641,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2941d1b4cf491940b4141b4d8ed62a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  acceleration: 20
-  deceleration: 15
+  moveSpeed: 10
+  acceleration: 0
+  deceleration: 20
 --- !u!114 &552921196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2725,11 +2725,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcaa02da2799ca046a9f3d546f066d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 25
+  dashSpeed: 20
   dashDuration: 0.2
   dashCooldown: 0.5
   doubleTapTime: 0.3
-  enableDoubleTap: 1
+  enableDoubleTap: 0
   dashParticles: {fileID: 0}
   dashTrail: {fileID: 0}
   dashColor: {r: 1, g: 0.8, b: 0.2, a: 1}
