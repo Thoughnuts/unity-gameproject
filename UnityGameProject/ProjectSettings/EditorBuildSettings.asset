@@ -8,8 +8,11 @@ EditorBuildSettings:
   - enabled: 1
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     path: Assets/Scenes/Tutorial.unity
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     path: Assets/Scenes/MainMenu.unity
@@ -17,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Backstory1.unity
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
