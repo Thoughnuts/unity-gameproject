@@ -1,4 +1,8 @@
 using System.Collections;
+<<<<<<< Updated upstream
+=======
+using System.Collections.Generic;
+>>>>>>> Stashed changes
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,12 +10,20 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
+<<<<<<< Updated upstream
         StartCoroutine(FadeAndLoadScene(1));
+=======
+        SceneManager.LoadSceneAsync(1);
+>>>>>>> Stashed changes
     }
 
     public void Credits()
     {
+<<<<<<< Updated upstream
         StartCoroutine(FadeAndLoadScene(2));
+=======
+        SceneManager.LoadSceneAsync(2);
+>>>>>>> Stashed changes
     }
 
     public void Exit()
@@ -19,6 +31,7 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+<<<<<<< Updated upstream
     IEnumerator FadeAndLoadScene(int sceneIndex)
     {
         // Create fade object
@@ -54,3 +67,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 }
+=======
+
+}
+>>>>>>> Stashed changes
